@@ -1,0 +1,5 @@
+pipeline:
+  build:
+    image: php:7.3.6-cli-stretch
+    commands:
+      - php hello.php

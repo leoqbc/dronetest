@@ -8,6 +8,6 @@ class HelloWorldTest extends TestCase
     {
         $out = 'Hello World';
 
-        $this->assertEquals('Hello world', $out);
+        $this->assertEquals('Hello World', $out);
     }
 }

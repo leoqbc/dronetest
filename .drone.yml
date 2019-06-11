@@ -5,6 +5,7 @@ steps:
   - name: testunit
     image: leoqbc/php-multiverse-auto
     commands:
+      - composer install
       - vendor/bin/phpunit tests/unit
   - name: slack
     image: plugins/slack

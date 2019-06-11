@@ -1,0 +1,13 @@
+kind: pipeline
+name: build
+
+steps:
+  - name: unit
+    image: leoqbc/php-multiverse-auto
+    commands:
+      - TMP=$(mktemp) 
+      - vendor/bin/phpunit tests/unit | tee $TMP
+      - OUTPUT=$(cat $TMP)
+      - OUTPUT=$(php -r "echo urlencode(\"$OUTPUT\");")
+      - URL="https://slack.com/api/chat.postMessage?token=xoxb-324370575447-647226255075-EInuJeUaGi1cmmTUpTDkVV7C&text=$OUTPUT&channel=automation-reports&as_user=comunicator&pretty=1"
+      - curl -X GET "$URL"

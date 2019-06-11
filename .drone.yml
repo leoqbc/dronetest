@@ -1,6 +1,21 @@
-pipeline:
-  build:
+kind: pipeline
+name: build
+
+steps:
+  - name: testunit
     image: leoqbc/php-multiverse-auto
     commands:
-      - composer install
       - vendor/bin/phpunit tests/unit
+  - name: slack
+    image: plugins/slack
+    settings:
+      webhook: https://hooks.slack.com/services/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
+      channel: automation-reports
+      template: >
+        {{#success build.status}}
+          O build {{build.number}} {{repo.name}} aprovado. Yahuuu!!
+        {{else}}
+          O build {{build.number}} {{repo.name}} falhou! Verifique.
+        {{/success}}
+    when:
+      status: [ success, failure ]
